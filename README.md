@@ -28,7 +28,7 @@ mv ~/Gf-Patterns/*.json ~/.gf
 ## Installation
 
 ```
-https://github.com/theinfosecguy/QuickXSS.git
+git clone https://github.com/theinfosecguy/QuickXSS.git
 cd QuickXSS
 chmod +x QuickXSS.sh
 ```
