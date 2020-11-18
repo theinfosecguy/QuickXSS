@@ -28,4 +28,4 @@ echo -e "\e[1;31m\nFinding valid URLs for XSS \n \e[0m"
 
 cat $1.txt | gf xss | sed 's/=.*/=/' | sed 's/URL: //' | tee $1_xss.txt
 
-dalfox file $1_xss.txt pipe
+dalfox file $1_xss.txt -b $2 pipe
