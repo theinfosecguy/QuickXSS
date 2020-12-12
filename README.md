@@ -3,6 +3,8 @@
 
 Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
 
+
+
 Here are their Repositories:
 
 1. [GF](https://github.com/tomnomnom/gf)
@@ -38,7 +40,7 @@ chmod +x QuickXSS.sh
 Provide your Target as the Argument
 
 ```
-./QuickXSS target.com
+./QuickXSS.sh target.com
 ```
 
 ### Special Thanks
