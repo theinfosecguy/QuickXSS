@@ -26,6 +26,8 @@ echo "$1" | waybackurls | tee $1.txt
 
 echo -e "\e[1;31m\nFinding valid URLs for XSS \n \e[0m"
 
-cat $1.txt | gf xss | sed 's/=.*/=/' | sed 's/URL: //' | tee $1_xss.txt
+cat $1.txt | gf xss | sed 's/=.*/=/' | sed 's/URL: //' | tee $1_temp_xss.txt
 
-dalfox file $1_xss.txt pipe
+sort $1_temp_xss.txt | uniq | tee $1_xss.txt
+
+dalfox file $1_xss.txt pipe -b tigv2.xss.ht
