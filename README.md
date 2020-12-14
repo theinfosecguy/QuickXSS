@@ -3,7 +3,7 @@
 
 Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
 
-
+![Alt](https://user-images.githubusercontent.com/33570148/102126099-a75bc280-3e70-11eb-9acd-b6737d5e886f.png)
 
 Here are their Repositories:
 
