@@ -37,10 +37,11 @@ chmod +x QuickXSS.sh
 
 ## Usage 
 
-Provide your Target as the Argument
+Provide your Target & XSSHunter Payload as the Argument.
+For generating XSS Hunter Payload: [Check This](https://xsshunter.com/)
 
 ```
-./QuickXSS.sh target.com
+./QuickXSS.sh target.com your_payload.xss.ht
 ```
 
 ### Special Thanks
