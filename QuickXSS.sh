@@ -30,4 +30,4 @@ cat $1.txt | gf xss | sed 's/=.*/=/' | sed 's/URL: //' | tee $1_temp_xss.txt
 
 sort $1_temp_xss.txt | uniq | tee $1_xss.txt
 
-dalfox file $1_xss.txt pipe -b tigv2.xss.ht
+dalfox file $1_xss.txt pipe -b $2
