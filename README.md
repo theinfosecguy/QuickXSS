@@ -40,7 +40,7 @@ chmod +x QuickXSS.sh
 Provide your Target as the Argument
 
 ```
-./QuickXSS.sh target.com
+./QuickXSS.sh target.com xss-hunter.ht
 ```
 
 ### Special Thanks
