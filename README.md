@@ -3,7 +3,7 @@
 
 Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
 
-![Alt](https://user-images.githubusercontent.com/33570148/102126099-a75bc280-3e70-11eb-9acd-b6737d5e886f.png)
+![Quick XSSr](https://user-images.githubusercontent.com/33570148/109413987-6fc3d780-79d6-11eb-9af2-bb58432fc151.png)
 
 Here are their Repositories:
 
@@ -51,5 +51,12 @@ Special Thanks to all these for their amazing tools ❤ :
 2. [Shiv Chouhan](https://twitter.com/1ndianl33t) for GF Patterns
 3. [HAHWUL](https://twitter.com/hahwul) for Dalfox
 4. [Zemo](https://www.youtube.com/watch?v=fVBvqy-7Ug0) for his amazing video.
+
+### Support !
+
+If QuickXSS helped you land a Bounty ! Support me & Buy me a Ko-Fi
+
+[Buy Me a Ko-Fi](https://ko-fi.com/theinfosecguy)
+
 
 #### React out to me if you have any ideas to make this better via [Twitter](https://twitter.com/g0t_rOoT_)
