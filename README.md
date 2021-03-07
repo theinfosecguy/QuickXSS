@@ -7,9 +7,9 @@
 ![](https://img.shields.io/github/forks/theinfosecguy/QuickXSS?color=red)
 ![](https://img.shields.io/github/stars/theinfosecguy/QuickXSS?color=red)
 
-Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
-
 ![Quick XSSr](https://user-images.githubusercontent.com/33570148/109413987-6fc3d780-79d6-11eb-9af2-bb58432fc151.png)
+
+Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
 
 Here are their Repositories:
 
