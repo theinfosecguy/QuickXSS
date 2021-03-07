@@ -1,5 +1,12 @@
 # QuickXSS
 
+![](https://img.shields.io/badge/license-MIT-red)
+![](https://img.shields.io/badge/PR's-Welcome-red)
+![](https://img.shields.io/github/contributors/theinfosecguy/QuickXSS?color=red)
+![](https://img.shields.io/badge/version-2.0.0-red)
+<br>
+![](https://img.shields.io/github/forks/theinfosecguy/QuickXSS?style=social)
+![](https://img.shields.io/github/stars/theinfosecguy/QuickXSS?style=social)
 
 Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
 
