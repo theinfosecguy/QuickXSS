@@ -7,9 +7,10 @@ version="1.2.0"
 red="\e[1;31m"
 green="\e[32m"
 blue="\e[34m"
+cyan="\e[0;36m"
 end="\e[0m"
 
-echo -e "$red
+echo -e "$cyan
  ██████╗  ██╗   ██╗██╗ ██████╗██╗  ██╗    ██╗  ██╗███████╗███████╗
  ██╔═══██╗██║   ██║██║██╔════╝██║ ██╔╝    ╚██╗██╔╝██╔════╝██╔════╝
  ██║   ██║██║   ██║██║██║     █████╔╝      ╚███╔╝ ███████╗███████╗
@@ -49,6 +50,12 @@ contruct_mode(){
 
 usage(){
     printf "Usage Coming Soon\n"
+    exit 1;
+}
+
+missing_arg(){
+    echo -e "${red}${bold}Missing Argument $1$end";
+    usage;
 }
 
 # Handling user arguments
@@ -79,7 +86,7 @@ while [ -n "$1" ]; do
 done
 
 # Creating Dir and fetch urls for a domain
-contruct_mode "$domain"
+[[ $domain ]] && contruct_mode "$domain" || missing_arg "-d";
 
 # Check if Results Argument is present or not.
 if [ -z "$out" ]
