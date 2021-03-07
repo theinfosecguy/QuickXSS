@@ -17,16 +17,33 @@ Here are their Repositories:
 2. [GF Patterns](https://github.com/1ndianl33t/Gf-Patterns)
 3. [Dalfox](https://github.com/hahwul/dalfox)
 4. [Waybackurls](https://github.com/tomnomnom/waybackurls)
-
+5. [Gau](https://github.com/lc/gau)
 
 ## Pre-Requisites
 
- Install Go in your Machine and then use following commands.
+Install Go in your Machine and then install required Tools.
 
+For installing Go in your system:
+```
+sudo apt install -y golang
+export GOROOT=/usr/lib/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+source .bashrc
+```
+## Install Tools in one go !
+
+```
+chmod +x install.sh
+./install.sh
+```
+
+### For Installing Pre-Requisites (In case you want to do it one by one):
 ```
 go get -u github.com/tomnomnom/gf
 go get github.com/tomnomnom/waybackurls
-go get -u github.com/hahwul/dalfox
+GO111MODULE=on go get -v github.com/hahwul/dalfox/v2
+GO111MODULE=on go get -u -v github.com/lc/gau
 mkdir .gf
 cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
 git clone https://github.com/1ndianl33t/Gf-Patterns
@@ -47,7 +64,13 @@ Provide your Target & XSSHunter Payload as the Argument.
 For generating XSS Hunter Payload: [Check This](https://xsshunter.com/)
 
 ```
-./QuickXSS.sh target.com your_payload.xss.ht
+QuickXSS Usage 
+
+./QuickXSS.sh -d <target.com>
+./QuickXSS.sh -d <target.com> -b <blindxss.xss.ht>
+./QuickXSS.sh -d <target.com> -o xss_results.txt 
+./QuickXSS.sh -d <target.com> -b <blindxss.xss.ht> -o xss_results.txt
+
 ```
 
 ### Special Thanks
@@ -56,6 +79,7 @@ Special Thanks to all these for their amazing tools ❤ :
 1. [TomNomNom](https://twitter.com/tomnomnom/) for Waybackurls and GF
 2. [Shiv Chouhan](https://twitter.com/1ndianl33t) for GF Patterns
 3. [HAHWUL](https://twitter.com/hahwul) for Dalfox
+4. [Corben Leo]() for gau
 4. [Zemo](https://www.youtube.com/watch?v=fVBvqy-7Ug0) for his amazing video.
 
 ### Support !
