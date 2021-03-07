@@ -19,14 +19,22 @@ echo -e "$cyan
   ╚══▀▀═╝  ╚═════╝ ╚═╝ ╚═════╝╚═╝  ╚═╝    ╚═╝  ╚═╝╚══════╝╚══════╝
 $end "
 
-printf "$bold$blue ** Developed by theinfosecguy ** \n\n$end"
+printf "$bold$blue ** Developed by theinfosecguy <3 ** \n\n$end"
 
 contruct_mode(){
+    if [ -d "results" ]
+    then
+        cd results;
+    else
+        mkdir results;
+        cd results;
+    fi
+
     echo -e "${green}Creating Directory for $1 ....$end";
 
     if [ -d "$1" ]; then
-    printf "$red$1 Directory already exits. Please try again.\n\n$end";
-    exit 1;
+        printf "$red$1 Directory already exits. Please try again.\n\n$end";
+        exit 1;
     fi
 
     mkdir $1
@@ -49,12 +57,16 @@ contruct_mode(){
 }
 
 usage(){
-    printf "Usage Coming Soon\n"
+    printf "QuickXSS Usage:\n\n"
+    printf "./QuickXSS.sh -d <target.com>\n"
+    printf "./QuickXSS.sh -d <target.com> -b <blindxss.xss.ht>\n"
+    printf "./QuickXSS.sh -d <target.com> -o xss_results.txt \n"
+    printf "./QuickXSS.sh -d <target.com> -b <blindxss.xss.ht> -o xss_results.txt\n\n"
     exit 1;
 }
 
 missing_arg(){
-    echo -e "${red}${bold}Missing Argument $1$end";
+    echo -e "${red}${bold}Missing Argument $1$end\n";
     usage;
 }
 
@@ -92,11 +104,11 @@ done
 if [ -z "$out" ]
 then
     out="results.txt"
+    printf "No Output File selected, Results will be stored in $out\n"
 fi
 
 # STart XSS Hunting by checking if Blind XSS payload is present or not.
-if [ -z "$blind" ]
-then
+if [ -z "$blind" ] ; then
     echo "XSS Automation Started using Dalfox.."
     dalfox file $domain_xss.txt -o $out
 else
@@ -105,4 +117,4 @@ else
 fi
 
 # Final Result
-echo -e "XSS automation completed, Results stored in$blue $domain Directory $end"
+echo -e "XSS automation completed, Results stored in$blue results/$domain ${end}Directory"
