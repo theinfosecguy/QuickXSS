@@ -15,13 +15,13 @@ echo -e "$cyan
 $end\n"
 
 printf "Installing GF..\n"
-go get -u github.com/tomnomnom/gf
+go install github.com/tomnomnom/gf@latest
 printf "Installing waybackurls ..\n"
-go get github.com/tomnomnom/waybackurls
+go install github.com/tomnomnom/waybackurls@latest
 printf "Installing Dalfox..\n"
 go install github.com/hahwul/dalfox/v2@latest
 printf "Installing gau..\n"
-GO111MODULE=on go get -u -v github.com/lc/gau
+go install github.com/lc/gau@latest
 printf "Setting up GF Patterns\n"
 mkdir ~/.gf
 cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
