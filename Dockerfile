@@ -1,4 +1,4 @@
-FROM golang:1.18.1-alpine3.15
+FROM golang:1.18-alpine3.15
 
 RUN apk update && apk add git
 
@@ -17,6 +17,5 @@ RUN rm -rf gf && rm -rf Gf-Patterns
 
 COPY QuickXSS.sh .
 RUN chmod +x QuickXSS.sh
-RUN ls -la
 
 ENTRYPOINT ["sh", "QuickXSS.sh"]

@@ -41,6 +41,16 @@ chmod +x install.sh
 ./install.sh
 ```
 
+## Docker support
+
+```bash
+# for build docker image
+$ docker build --tag quickxss .
+# run docker image
+$ docker run -it --rm --name qs quickxss
+```
+
+
 ### For Installing Pre-Requisites (In case you want to do it one by one):
 ```
 go get -u github.com/tomnomnom/gf
