@@ -48,6 +48,8 @@ chmod +x install.sh
 $ docker build --tag quickxss .
 # run docker image
 $ docker run -it --rm --name qs quickxss
+# Set alias to ~/.zshrc or ~/.bashrc ( depend which shell you are using ) will help to global execute quickxss
+$ alias quickxss='docker run -it --rm --name qs quickxss'
 ```
 
 
