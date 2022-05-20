@@ -1,16 +1,21 @@
-# QuickXSS
+<div align="center">
+  <h1> QuickXSS - Automate your XSS workflow </h1>
+  <img src="https://img.shields.io/badge/license-MIT-red"/>
+  <img src="https://img.shields.io/badge/PR's-Welcome-red"/>
+  <img src="https://img.shields.io/badge/version-2.0.0-red"/>
+  <img src="https://img.shields.io/github/contributors/theinfosecguy/QuickXSS?color=red"/>
+  <img src="https://img.shields.io/github/forks/theinfosecguy/QuickXSS?color=red"/>
+  <img src="https://img.shields.io/github/stars/theinfosecguy/QuickXSS?color=red"/>
+</div>
 
-![](https://img.shields.io/badge/license-MIT-red)
-![](https://img.shields.io/badge/PR's-Welcome-red)
-![](https://img.shields.io/badge/version-2.0.0-red)
-![](https://img.shields.io/github/contributors/theinfosecguy/QuickXSS?color=red)
-![](https://img.shields.io/github/forks/theinfosecguy/QuickXSS?color=red)
-![](https://img.shields.io/github/stars/theinfosecguy/QuickXSS?color=red)
 
 <h1 align="center">
   <br>
   <a href=""><img src="https://user-images.githubusercontent.com/33570148/110236951-26880080-7f5f-11eb-9b92-4b6122478e33.png" alt="" width="400px;"></a>
 </h1>
+
+_**Read Official Guide: https://www.bugblogs.tech/post/automating-xss-using-dalfox-gf-and-waybackurls**_
+
 
 Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
 
