@@ -106,6 +106,10 @@ Special Thanks to all these for their amazing tools ❤ :
 
 If QuickXSS helped you land a Bounty ! Support me & Buy me a Ko-Fi
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=theinfosecguy/quickxss&type=Date)](https://star-history.com/#theinfosecguy/quickxss&Date)
+
 [Buy Me a Ko-Fi](https://ko-fi.com/theinfosecguy)
 
 
