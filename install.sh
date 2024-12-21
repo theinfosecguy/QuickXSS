@@ -23,13 +23,15 @@ go install github.com/tomnomnom/waybackurls@latest
 printf "Installing Dalfox..\n"
 go install github.com/hahwul/dalfox/v2@latest
 printf "Installing gau..\n"
-go install github.com/lc/gau@latest
+go install github.com/lc/gau/v2/cmd/gau@latest
 
 printf "Setting up GF Patterns\n"
 # Create directory for gf-patterns
-mkdir ~/.gf
+if [ ! -d ~/.gf ]; then
+    mkdir ~/.gf
+fi
 # Copy example gf patterns to gf directory
-cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
+cp -r $GOPATH/pkg/mod/github.com/tomnomnom/gf@v0.0.0-20200618134122-dcd4c361f9f5/examples ~/.gf
 cd ~
 
 #Install GF Patterns
