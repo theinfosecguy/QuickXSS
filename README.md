@@ -14,9 +14,6 @@
   <a href=""><img src="https://user-images.githubusercontent.com/33570148/110236951-26880080-7f5f-11eb-9b92-4b6122478e33.png" alt="" width="400px;"></a>
 </h1>
 
-_**Read Official Guide: https://www.bugblogs.tech/post/automating-xss-using-dalfox-gf-and-waybackurls**_
-
-
 Bash Script to Automate XSS using Waybackurls, GF, GF Patterns and Dalfox. 
 
 Here are their Repositories:
