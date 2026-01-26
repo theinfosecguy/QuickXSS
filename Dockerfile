@@ -1,21 +1,34 @@
-FROM golang:1.18-alpine3.15
+FROM python:3.12-slim
 
-RUN apk update && apk add git
+ENV DEBIAN_FRONTEND=noninteractive
+ENV GOPATH=/root/go
+ENV PATH="/root/go/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-WORKDIR /quickxss
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        git \
+        ca-certificates \
+        golang-go \
+    && rm -rf /var/lib/apt/lists/*
 
-## install go packages
-RUN go install github.com/tomnomnom/gf@latest
-RUN go install github.com/tomnomnom/waybackurls@latest
-RUN go install github.com/hahwul/dalfox/v2@latest
-RUN go install github.com/lc/gau@latest
-RUN mkdir ~/.gf
-RUN git clone https://github.com/tomnomnom/gf
-RUN git clone https://github.com/1ndianl33t/Gf-Patterns
-RUN cp -r gf/examples ~/.gf/ && cp -r Gf-Patterns/*.json ~/.gf/
-RUN rm -rf gf && rm -rf Gf-Patterns
+# Install Go-based tools
+RUN go install github.com/tomnomnom/gf@latest \
+    && go install github.com/tomnomnom/waybackurls@latest \
+    && go install github.com/hahwul/dalfox/v2@latest \
+    && go install github.com/lc/gau@latest
 
-COPY QuickXSS.sh .
-RUN chmod +x QuickXSS.sh
+# Install GF patterns
+RUN mkdir -p /root/.gf \
+    && git clone --depth 1 https://github.com/tomnomnom/gf /tmp/gf \
+    && cp -r /tmp/gf/examples/* /root/.gf/ \
+    && git clone --depth 1 https://github.com/1ndianl33t/Gf-Patterns /tmp/Gf-Patterns \
+    && cp -r /tmp/Gf-Patterns/*.json /root/.gf/ \
+    && rm -rf /tmp/gf /tmp/Gf-Patterns
 
-ENTRYPOINT ["sh", "QuickXSS.sh"]
+WORKDIR /app
+COPY . /app
+
+RUN pip install --no-cache-dir .
+
+ENTRYPOINT ["quickxss"]
+CMD ["scan", "--help"]
