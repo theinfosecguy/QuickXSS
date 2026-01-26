@@ -1,0 +1,52 @@
+[project]
+name = "quickxss"
+version = "3.0.0"
+description = "Automate XSS workflows with waybackurls, gau, gf, and dalfox."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [
+  { name = "theinfosecguy" }
+]
+dependencies = [
+  "typer>=0.12.0",
+  "pyfiglet>=1.0.2",
+]
+
+[project.scripts]
+quickxss = "quickxss.cli:main"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "isort>=5.13.0",
+  "ruff>=0.6.0",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+markers = [
+  "integration: external tool and network tests",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = [
+  "quickxss",
+  "quickxss.cli",
+  "quickxss.constants",
+  "quickxss.models",
+  "quickxss.scan",
+  "quickxss.utils",
+]
