@@ -49,11 +49,14 @@ def test_integration_scan(tmp_path: Path) -> None:
             "--results-dir",
             str(tmp_path),
             "--overwrite",
-            "--quiet",
+            "--verbose",
+            "--dalfox-args",
+            "--timeout 5",  # Limit dalfox request timeout for faster CI
         ],
     )
 
-    assert result.exit_code == 0
+    # Include output for debugging CI failures
+    assert result.exit_code == 0, f"exit_code={result.exit_code}\n{result.output}"
 
     base_dir = tmp_path / domain
     urls_file = base_dir / f"{domain}.txt"
