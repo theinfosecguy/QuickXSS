@@ -52,6 +52,22 @@ quickxss scan -d example.com -b blind.xss.ht
 quickxss scan -d example.com -o results.txt
 ```
 
+## Setup
+
+Check dependencies:
+
+```bash
+quickxss setup
+```
+
+Install missing dependencies (macOS/Linux with brew/apt):
+
+```bash
+quickxss setup --install
+```
+
+On Windows, `setup` is check-only and prints manual install commands.
+
 ## Docker
 
 Build and run using Docker:
