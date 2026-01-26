@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, List, Set
 
 from quickxss.models.scan import ScanPaths
-from quickxss.scan.errors import ValidationError
+from quickxss.scan.errors import OperationError, ValidationError
 
 
 def validate_domain(domain: str) -> str:
@@ -66,14 +66,17 @@ def write_lines(path: Path, lines: Iterable[str]) -> None:
     content = "\n".join(lines)
     if content:
         content += "\n"
-    path.write_text(content, encoding="utf-8")
+    try:
+        path.write_text(content, encoding="utf-8")
+    except OSError as exc:
+        raise OperationError(f"Failed to write {path}: {exc}") from exc
 
 
-def dedupe_preserve_order(lines: Iterable[str]) -> list[str]:
+def dedupe_preserve_order(lines: Iterable[str]) -> List[str]:
     """De-duplicate lines while preserving order."""
 
-    seen: set[str] = set()
-    output: list[str] = []
+    seen: Set[str] = set()
+    output: List[str] = []
     for line in lines:
         if line not in seen:
             seen.add(line)

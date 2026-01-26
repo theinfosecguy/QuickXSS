@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import List, Optional
+
 
 class QuickXSSError(Exception):
     """Base error for QuickXSS failures."""
@@ -18,6 +20,10 @@ class DependencyError(QuickXSSError):
 class ToolError(QuickXSSError):
     """Raised when an external tool returns a non-zero exit code."""
 
-    def __init__(self, message: str, command: list[str] | None = None) -> None:
+    def __init__(self, message: str, command: Optional[List[str]] = None) -> None:
         super().__init__(message)
         self.command = command or []
+
+
+class OperationError(QuickXSSError):
+    """Raised when local operations fail (filesystem, parsing, etc.)."""

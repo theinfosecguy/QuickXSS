@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import subprocess
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, List, Optional
 
 from quickxss.models.scan import ScanConfig, ScanResult
 from quickxss.scan.deps import check_binaries, check_gf_pattern
-from quickxss.scan.errors import ToolError
+from quickxss.scan.errors import OperationError, ToolError
 from quickxss.scan.io import dedupe_preserve_order, ensure_scan_paths, write_lines
 from quickxss.utils.log import Logger
 from quickxss.utils.progress import Progress
@@ -45,10 +45,16 @@ def run_scan(config: ScanConfig, logger: Logger) -> ScanResult:
     logger.info(f"Prepared {len(deduped)} candidate URLs.")
 
     if not config.keep_temp:
-        paths.temp_xss_file.unlink(missing_ok=True)
+        try:
+            paths.temp_xss_file.unlink(missing_ok=True)
+        except OSError as exc:
+            raise OperationError(f"Failed to remove temp file: {paths.temp_xss_file}") from exc
 
     # Always create the output file, even when no findings are reported.
-    paths.results_file.write_text("", encoding="utf-8")
+    try:
+        paths.results_file.write_text("", encoding="utf-8")
+    except OSError as exc:
+        raise OperationError(f"Failed to create results file: {paths.results_file}") from exc
 
     if deduped:
         run_dalfox(config, paths.xss_file, paths.results_file, logger, progress)
@@ -66,10 +72,10 @@ def run_scan(config: ScanConfig, logger: Logger) -> ScanResult:
     )
 
 
-def collect_urls(config: ScanConfig, logger: Logger, progress: Progress) -> list[str]:
+def collect_urls(config: ScanConfig, logger: Logger, progress: Progress) -> List[str]:
     """Collect URLs from configured sources."""
 
-    urls: list[str] = []
+    urls: List[str] = []
     if config.use_wayback:
         message = "[waybackurls] Collecting URLs..."
         if progress.enabled:
@@ -91,8 +97,8 @@ def collect_urls(config: ScanConfig, logger: Logger, progress: Progress) -> list
 
 
 def build_candidates(
-    config: ScanConfig, urls: list[str], logger: Logger, progress: Progress
-) -> list[str]:
+    config: ScanConfig, urls: List[str], logger: Logger, progress: Progress
+) -> List[str]:
     """Filter URLs using gf and normalize parameters."""
 
     if not urls:
@@ -108,21 +114,21 @@ def build_candidates(
     return [line for line in normalized if line]
 
 
-def run_wayback(domain: str, logger: Logger) -> list[str]:
+def run_wayback(domain: str, logger: Logger) -> List[str]:
     """Run waybackurls for a domain."""
 
     output = run_command(["waybackurls"], domain + "\n", logger)
     return normalize_lines(output.splitlines())
 
 
-def run_gau(domain: str, logger: Logger) -> list[str]:
+def run_gau(domain: str, logger: Logger) -> List[str]:
     """Run gau for a domain."""
 
     output = run_command(["gau", domain], None, logger)
     return normalize_lines(output.splitlines())
 
 
-def run_gf(pattern: str, urls: Iterable[str], logger: Logger) -> list[str]:
+def run_gf(pattern: str, urls: Iterable[str], logger: Logger) -> List[str]:
     """Run gf with the given pattern on a URL list."""
 
     input_text = "\n".join(urls) + "\n"
@@ -153,7 +159,7 @@ def run_dalfox(
         run_command(cmd, None, logger)
 
 
-def run_command(command: list[str], input_text: str | None, logger: Logger) -> str:
+def run_command(command: List[str], input_text: Optional[str], logger: Logger) -> str:
     """Run a subprocess and return stdout."""
 
     logger.debug(f"Running: {' '.join(command)}")
@@ -179,7 +185,7 @@ def run_command(command: list[str], input_text: str | None, logger: Logger) -> s
     return result.stdout
 
 
-def normalize_lines(lines: Iterable[str]) -> list[str]:
+def normalize_lines(lines: Iterable[str]) -> List[str]:
     """Normalize lines by stripping whitespace and dropping empties."""
 
     return [line.strip() for line in lines if line.strip()]
@@ -202,5 +208,8 @@ def count_findings(results_file: Path) -> int:
 
     if not results_file.exists():
         return 0
-    lines = results_file.read_text(encoding="utf-8").splitlines()
+    try:
+        lines = results_file.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        raise OperationError(f"Failed to read results file: {results_file}") from exc
     return len([line for line in lines if line.strip()])
