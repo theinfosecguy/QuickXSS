@@ -48,5 +48,6 @@ packages = [
   "quickxss.constants",
   "quickxss.models",
   "quickxss.scan",
+  "quickxss.setup",
   "quickxss.utils",
 ]
