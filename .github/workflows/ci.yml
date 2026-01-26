@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      QUICKXSS_TARGET: "testphp.vulnweb.com"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          echo "Installing Python dependencies..."
+          python -m pip install -U pip
+          python -m pip install -e ".[dev]"
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.x"
+
+      - name: Add Go bin to PATH
+        run: echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+
+      - name: Install Go tools
+        run: |
+          set -euo pipefail
+          echo "Installing Go tools..."
+          go install github.com/tomnomnom/gf@latest
+          go install github.com/tomnomnom/waybackurls@latest
+          go install github.com/hahwul/dalfox/v2@latest
+          go install github.com/lc/gau@latest
+
+      - name: Install gf patterns
+        run: |
+          set -euo pipefail
+          echo "Installing gf patterns..."
+          mkdir -p ~/.gf
+          git clone --depth 1 https://github.com/tomnomnom/gf /tmp/gf
+          cp -r /tmp/gf/examples/* ~/.gf/
+          git clone --depth 1 https://github.com/1ndianl33t/Gf-Patterns /tmp/Gf-Patterns
+          cp -r /tmp/Gf-Patterns/*.json ~/.gf/
+
+      - name: Run unit tests
+        run: |
+          set -euo pipefail
+          echo "Running unit tests..."
+          pytest -m "not integration"
+
+      - name: Run integration tests
+        env:
+          QUICKXSS_INTEGRATION: "1"
+        run: |
+          set -euo pipefail
+          echo "Running integration tests..."
+          pytest -m integration
