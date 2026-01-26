@@ -1,111 +1,68 @@
 # QuickXSS
 
-Automate your XSS workflow by chaining **waybackurls**, **gau**, **gf**, and **dalfox**.
+> Automate XSS discovery by chaining **waybackurls**, **gau**, **gf**, and **dalfox**.
 
-## Requirements
+[![CI](https://github.com/theinfosecguy/QuickXSS/actions/workflows/ci.yml/badge.svg)](https://github.com/theinfosecguy/QuickXSS/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/quickxss)](https://pypi.org/project/quickxss/)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-QuickXSS orchestrates external tools. Install these first:
-
-- Python 3.12+
-
-- [gf](https://github.com/tomnomnom/gf)
-- [Gf-Patterns](https://github.com/1ndianl33t/Gf-Patterns)
-- [dalfox](https://github.com/hahwul/dalfox)
-- [waybackurls](https://github.com/tomnomnom/waybackurls)
-- [gau](https://github.com/lc/gau)
-
-Example (Go-based installs):
+## Quick Start
 
 ```bash
-go install github.com/tomnomnom/gf@latest
-go install github.com/tomnomnom/waybackurls@latest
-go install github.com/hahwul/dalfox/v2@latest
-go install github.com/lc/gau@latest
-
-mkdir -p ~/.gf
-git clone https://github.com/tomnomnom/gf /tmp/gf
-cp -r /tmp/gf/examples/* ~/.gf/
-
-git clone https://github.com/1ndianl33t/Gf-Patterns /tmp/Gf-Patterns
-cp -r /tmp/Gf-Patterns/*.json ~/.gf/
+pip install quickxss
+quickxss setup --install      # Auto-install gf, dalfox, waybackurls, gau
+quickxss scan -d testphp.vulnweb.com
 ```
 
-## Install QuickXSS
-
-Recommended with `pipx`:
+## Installation
 
 ```bash
-pipx install .
+pip install quickxss
 ```
 
-Or with `pip`:
+Or with pipx:
 
 ```bash
-pip install .
+pipx install quickxss
 ```
 
 ## Usage
 
 ```bash
-quickxss scan -d example.com
-quickxss scan -d example.com -b blind.xss.ht
-quickxss scan -d example.com -o results.txt
+quickxss scan -d testphp.vulnweb.com                    # Basic scan
+quickxss scan -d testphp.vulnweb.com -b blind.xss.ht    # With blind XSS callback
+quickxss scan -d testphp.vulnweb.com -o results.txt     # Custom output name
+quickxss setup                                          # Check dependencies
+quickxss setup --install                                # Auto-install missing deps
 ```
-
-## Setup
-
-Check dependencies:
-
-```bash
-quickxss setup
-```
-
-Install missing dependencies (macOS/Linux with brew/apt):
-
-```bash
-quickxss setup --install
-```
-
-On Windows, `setup` is check-only and prints manual install commands.
 
 ## Docker
 
-Build and run using Docker:
-
 ```bash
 docker build -t quickxss .
-docker run --rm -it quickxss scan -d example.com
+docker run --rm -it quickxss scan -d testphp.vulnweb.com
 ```
 
 ## Output
 
-Results are stored under `results/<domain>/` by default:
+Results saved to `results/<domain>/`:
 
-- `<domain>.txt` (raw URL collection)
-- `<domain>_temp_xss.txt` (gf output before de-dup)
-- `<domain>_xss.txt` (candidate URLs)
-- `results.txt` (dalfox output; always created)
+| File | Description |
+|------|-------------|
+| `<domain>.txt` | Raw URL collection |
+| `<domain>_xss.txt` | Candidate URLs for testing |
+| `results.txt` | Dalfox findings |
 
 ## Development
 
-Run tests:
-
 ```bash
-pytest
-```
-
-Integration tests (requires external tools + network):
-
-```bash
-QUICKXSS_INTEGRATION=1 pytest -m integration
-```
-
-Sort imports:
-
-```bash
-isort quickxss tests
+pytest                                    # Run tests
+QUICKXSS_INTEGRATION=1 pytest -m integration  # Integration tests
+make isort                                # Sort imports
+make lint                                 # Run linter
 ```
 
 ## License
 
-MIT
+[MIT](LICENSE)
