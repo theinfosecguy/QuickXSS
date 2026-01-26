@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from typing import Iterator
+from typing import Iterator, Optional
 
 from rich.console import Console
 
@@ -14,7 +14,7 @@ class Progress:
     """Minimal spinner-based progress helper."""
 
     enabled: bool
-    _console: Console | None = field(init=False, default=None)
+    _console: Optional[Console] = field(init=False, default=None)
 
     def __post_init__(self) -> None:
         self._console = Console() if self.enabled else None

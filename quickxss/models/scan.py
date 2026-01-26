@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Sequence
+from typing import List, Optional
 
 
 @dataclass(frozen=True, slots=True)
@@ -18,8 +18,8 @@ class ScanConfig:
     use_wayback: bool
     use_gau: bool
     gf_pattern: str
-    blind_payload: str | None
-    dalfox_args: Sequence[str]
+    blind_payload: Optional[str]
+    dalfox_args: List[str]
     keep_temp: bool
     verbose: bool
     quiet: bool

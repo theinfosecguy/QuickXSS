@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import shutil
 from pathlib import Path
+from typing import List
 
 import pytest
 from typer.testing import CliRunner
@@ -12,7 +13,7 @@ import quickxss.cli as cli
 REQUIRED_TOOLS = ["gf", "dalfox", "waybackurls", "gau"]
 
 
-def _missing_tools() -> list[str]:
+def _missing_tools() -> List[str]:
     return [tool for tool in REQUIRED_TOOLS if shutil.which(tool) is None]
 
 

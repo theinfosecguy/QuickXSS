@@ -5,12 +5,12 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 from shutil import which
-from typing import Iterable
+from typing import Iterable, List
 
 from quickxss.scan.errors import DependencyError
 
 
-def missing_binaries(names: Iterable[str]) -> list[str]:
+def missing_binaries(names: Iterable[str]) -> List[str]:
     """Return a list of missing binaries from PATH."""
 
     return [name for name in names if which(name) is None]
