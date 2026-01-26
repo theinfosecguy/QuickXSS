@@ -51,7 +51,9 @@ def test_integration_scan(tmp_path: Path) -> None:
             "--overwrite",
             "--verbose",
             "--dalfox-args",
-            "--timeout 5",  # Limit dalfox request timeout for faster CI
+            # Limit timeout for faster CI runs and skip DOM mining to avoid
+            # chromedp panics in headless CI environments without Chrome
+            "--timeout 5 --skip-mining-dom",
         ],
     )
 
