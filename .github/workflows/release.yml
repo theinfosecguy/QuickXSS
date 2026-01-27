@@ -1,10 +1,12 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - "v*"
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (must match pyproject.toml)'
+        required: true
+        type: string
 
 jobs:
   build:
@@ -12,6 +14,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Verify version matches
+        run: |
+          version_in_file=$(grep '^version = ' pyproject.toml | cut -d'"' -f2)
+          if [ "$version_in_file" != "${{ inputs.version }}" ]; then
+            echo "Error: Version in pyproject.toml ($version_in_file) doesn't match input (${{ inputs.version }})"
+            echo "Please update pyproject.toml via PR first"
+            exit 1
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -37,6 +50,13 @@ jobs:
           python -m build
           python -m twine check dist/*
 
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "v${{ inputs.version }}"
+          git push origin "v${{ inputs.version }}"
+
       - name: Upload dist artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -49,7 +69,7 @@ jobs:
     environment: pypi
     permissions:
       id-token: write
-      contents: read
+      contents: write
     steps:
       - name: Download dist artifacts
         uses: actions/download-artifact@v4
@@ -59,3 +79,11 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          name: Release v${{ inputs.version }}
+          generate_release_notes: true
+          files: dist/*
